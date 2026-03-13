@@ -1,132 +1,119 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useToast } from './ToastContext.jsx';
-import API from '../services/api';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-const CartContext = createContext(undefined);
+const CartContext = createContext();
 
 export function CartProvider({ children }) {
 
-  const { showToast } = useToast();
-  const [items, setItems] = useState([]);
+const [items, setItems] = useState([]);
 
-  // ✅ FETCH CART FROM BACKEND
-  const fetchCart = async () => {
-    try {
-      const res = await API.get('/cart');
-
-      // 🔥 Normalize backend data
-      const formatted = res.data.map(item => ({
-        productId: item.product_id,
-        quantity: item.quantity,
-        product: {
-          id: item.product_id,
-          name: item.name,
-          price: item.price,
-          images: [item.image], // backend gives single image
-        }
-      }));
-
-      setItems(formatted);
-
-    } catch (err) {
-      console.log("Cart fetch error", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchCart();
-  }, []);
-
-  // ✅ ADD TO CART (FIXED 🔥)
-  const addToCart = async (product, quantity = 1) => {
-  try {
-    await API.post('/cart', {
-      product_id: product.id, // ✅ IMPORTANT
-      quantity
-    });
-
-    showToast(`${product.name} added to cart 🛒`);
-
-    const res = await API.get('/cart');
-    setItems(res.data);
-
-  } catch (err) {
-    console.log("Cart error", err.response?.data || err.message);
-  }
+const isLoggedIn = () => {
+const user = localStorage.getItem("user");
+return !!user;
 };
 
-  // ✅ REMOVE ITEM
-  const removeFromCart = async (productId) => {
-    try {
-      await API.delete(`/cart/${productId}`);
+useEffect(() => {
 
-      setItems(prev => prev.filter(item => item.productId !== productId));
+if (!isLoggedIn()) {
+  setItems([]);
+  return;
+}
 
-      showToast("Item removed ❌");
+const saved = localStorage.getItem("cart");
 
-    } catch (err) {
-      console.log("Remove error", err);
+if (saved) {
+  setItems(JSON.parse(saved));
+}
+
+}, []);
+
+useEffect(() => {
+
+if (isLoggedIn()) {
+  localStorage.setItem("cart", JSON.stringify(items));
+}
+
+}, [items]);
+
+const addToCart = (product, quantity = 1) => {
+
+if (!isLoggedIn()) {
+  alert("Please login first to add items to cart");
+  window.location.href = "/login";
+  return;
+}
+
+setItems(prev => {
+
+  const existing = prev.find(i => i.productId === product.id);
+
+  if (existing) {
+
+    return prev.map(i =>
+      i.productId === product.id
+        ? { ...i, quantity: i.quantity + quantity }
+        : i
+    );
+
+  }
+
+  return [
+    ...prev,
+    {
+      productId: product.id,
+      quantity,
+      product
     }
-  };
+  ];
 
-  // ✅ UPDATE QUANTITY (FIXED 🔥)
-  const updateQuantity = async (productId, quantity) => {
-    try {
-      await API.put('/cart', {
-        product_id: productId, // ✅ FIXED
-        quantity
-      });
+});
 
-      await fetchCart();
+};
 
-    } catch (err) {
-      console.log("Update quantity error", err);
-    }
-  };
+const removeFromCart = (productId) => {
+setItems(prev => prev.filter(i => i.productId !== productId));
+};
 
-  // ✅ CLEAR CART (OPTIONAL - backend route required)
-  const clearCart = async () => {
-    try {
-      await API.delete('/cart');
+const updateQuantity = (productId, quantity) => {
 
-      setItems([]);
+if (quantity < 1) return;
 
-      showToast("Cart cleared 🧹");
+setItems(prev =>
+  prev.map(i =>
+    i.productId === productId
+      ? { ...i, quantity }
+      : i
+  )
+);
 
-    } catch (err) {
-      console.log("Clear cart error", err);
-    }
-  };
+};
 
-  // ✅ TOTALS
-  const totalItems = items.reduce(
-    (sum, item) => sum + (item.quantity || 0),
-    0
-  );
+const totalItems = items.reduce(
+(sum, item) => sum + item.quantity,
+0
+);
 
-  const totalPrice = items.reduce(
-    (sum, item) =>
-      sum + ((item.product?.price || 0) * (item.quantity || 0)),
-    0
-  );
+const totalPrice = items.reduce(
+(sum, item) => sum + item.product.price * item.quantity,
+0
+);
 
-  return (
-    <CartContext.Provider value={{
-      items,
-      addToCart,
-      removeFromCart,
-      updateQuantity,
-      clearCart,
-      totalItems,
-      totalPrice
-    }}>
-      {children}
-    </CartContext.Provider>
-  );
+return (
+<CartContext.Provider
+value={{
+items,
+addToCart,
+removeFromCart,
+updateQuantity,
+totalItems,
+totalPrice
+}}
+>
+{children}
+</CartContext.Provider>
+);
+
 }
 
 export function useCart() {
-  const context = useContext(CartContext);
-  if (!context) throw new Error('useCart must be used within a CartProvider');
-  return context;
+return useContext(CartContext);
 }

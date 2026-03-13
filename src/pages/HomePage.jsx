@@ -1,204 +1,300 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { MOCK_PRODUCTS } from '../constants';
-import ProductCard from '../components/ProductCard';
-import { motion } from 'motion/react';
-import API from '../services/api';
+import React from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
+import PromoSection from "../components/PromoSection";
+import ProductCollections from "../components/ProductCollection";
 
 export default function HomePage() {
 
-  const [products, setProducts] = useState([]);
-  const [heroIndex, setHeroIndex] = useState(0);
+const products = [
 
-  const heroImages = [
-    "https://images.unsplash.com/photo-1441986300917-64674bd600d8",
-    "https://images.unsplash.com/photo-1521335629791-ce4aec67dd47",
-    "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
-    "https://images.unsplash.com/photo-1490481651871-ab68de25d43d",
-    "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c"
-  ];
+/* ---------- LATEST PRODUCTS ---------- */
 
-  // 🔥 CATEGORY DATA
-  const categories = [
-    { name: "Electronics", color: "bg-blue-100" },
-    { name: "Fashion", color: "bg-pink-100" },
-    { name: "Toys & Game", color: "bg-green-100" },
-    { name: "Accessories", color: "bg-yellow-100" },
-    { name: "Books", color: "bg-purple-100" }
-  ];
+{
+id:1,
+name:"Classic Straw Hat",
+description:"Premium summer straw hat perfect for casual outings.",
+price:499,
+rating:4.1,
+category:"latest",
+images:[""]
+},
 
-  // FETCH
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await API.get('/products');
+{
+id:2,
+name:"Pink Casual Top",
+description:"Lightweight stylish top designed for everyday comfort.",
+price:899,
+rating:4.6,
+category:"latest",
+images:[""]
+},
 
-        // 🔥 FIX: backend image → frontend images[]
-        const fixed = res.data.map(p => ({
-          ...p,
-          images: p.images || [p.image || "https://via.placeholder.com/300"]
-        }));
+{
+id:3,
+name:"Minimal Grey T-Shirt",
+description:"Minimal streetwear t-shirt made with breathable cotton.",
+price:599,
+rating:3.9,
+category:"latest",
+images:[""]
+},
 
-        setProducts(fixed);
+{
+id:4,
+name:"Smart Watch Series",
+description:"Fitness smartwatch with heart rate and activity tracking.",
+price:2499,
+rating:4.8,
+category:"latest",
+images:[""]
+},
 
-      } catch {
-        setProducts(MOCK_PRODUCTS);
-      }
-    };
-    fetchData();
-  }, []);
+{
+id:5,
+name:"Modern Pink Chair",
+description:"Minimal aesthetic chair ideal for living rooms.",
+price:3499,
+rating:4.3,
+category:"latest",
+images:[""]
+},
 
-  // HERO AUTO
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroIndex(prev => (prev + 1) % heroImages.length);
-    }, 3000);
+{
+id:6,
+name:"Wireless Headphones",
+description:"Noise cancelling headphones with immersive audio.",
+price:1999,
+rating:4.7,
+category:"latest",
+images:[""]
+},
 
-    return () => clearInterval(interval);
-  }, []);
+{
+id:7,
+name:"Floral Designer Heels",
+description:"Elegant floral heels perfect for parties and events.",
+price:2899,
+rating:3.7,
+category:"latest",
+images:[""]
+},
 
-  const mostViewed = [...products].sort(() => 0.5 - Math.random()).slice(0, 8);
-  const newArrivals = [...products].slice(8, 16);
+{
+id:8,
+name:"Smartphone X",
+description:"High performance smartphone with AMOLED display.",
+price:15999,
+rating:4.9,
+category:"latest",
+images:[""]
+},
 
-  const salesProducts = products.some(p => p.discount)
-    ? products.filter(p => p.discount).slice(0, 8)
-    : [...products].slice(16, 24);
+/* ---------- BEST SELLERS ---------- */
 
-  const holiProducts = [
-    {
-      id: "h1",
-      name: "Holi Color Pack",
-      price: 499,
-      discount: 20,
-      category: "Holi",
-      images: ["https://images.unsplash.com/photo-1615916571200-3a0dbd0d66c2"]
-    },
-    {
-      id: "h2",
-      name: "Water Pichkari Gun",
-      price: 299,
-      discount: 15,
-      category: "Holi",
-      images: ["https://images.unsplash.com/photo-1589998059171-988d887df646"]
-    },
-    {
-      id: "h3",
-      name: "White Holi T-Shirt",
-      price: 699,
-      discount: 25,
-      category: "Holi",
-      images: ["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"]
-    }
-  ];
+{
+id:9,
+name:"Stanley Quencher Tumbler",
+description:"Insulated tumbler trending across social media.",
+price:2499,
+rating:4.9,
+category:"best"
+},
 
-  return (
-    <div className="space-y-12 pb-12">
+{
+id:10,
+name:"Mighty Patch Pimple Patches",
+description:"Fast acting acne patches loved by skincare users.",
+price:599,
+rating:4.4,
+category:"best"
+},
 
-      {/* HERO */}
-      <section className="relative h-[400px] lg:h-[500px] overflow-hidden">
-        {heroImages.map((img, index) => (
-          <img
-            key={index}
-            src={`${img}?auto=format&fit=crop&w=1920&q=80`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-              index === heroIndex ? "opacity-60" : "opacity-0"
-            }`}
-          />
-        ))}
+{
+id:11,
+name:"Oversized Hoodie",
+description:"Comfortable oversized hoodie trending in streetwear.",
+price:1499,
+rating:4.5,
+category:"best"
+},
 
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-transparent" />
+{
+id:12,
+name:"Beef Tallow Moisturizer",
+description:"Natural moisturizer trending in skincare routines.",
+price:999,
+rating:4.0,
+category:"best"
+},
 
-        <div className="relative max-w-7xl mx-auto px-4 h-full flex items-center">
-          <motion.div className="max-w-xl space-y-6">
-            <h1 className="text-4xl lg:text-6xl font-bold text-white">
-              Empowering Small Businesses
-            </h1>
+{
+id:13,
+name:"Electric Mountain Bike",
+description:"Eco-friendly electric bicycle for commuting.",
+price:45000,
+rating:4.7,
+category:"best"
+},
 
-            <p className="text-slate-300">
-              Discover trending products with smart recommendations.
-            </p>
+{
+id:14,
+name:"Wireless Charging Desk Mat",
+description:"Desk mat with integrated wireless charging.",
+price:1899,
+rating:4.1,
+category:"best"
+},
 
-            <div className="flex flex-wrap gap-3">
-              <Link 
-                to="/login?redirect=/products"
-                className="btn-primary px-5 py-2 text-sm flex items-center gap-2"
-              >
-                Shop Now <ArrowRight className="w-4 h-4" />
-              </Link>
+{
+id:15,
+name:"Digital Air Fryer",
+description:"Healthy cooking appliance for oil-free frying.",
+price:5999,
+rating:4.6,
+category:"best"
+},
 
-              <Link 
-                to="/signup?role=vendor"
-                className="px-5 py-2 text-sm border border-white/30 text-white rounded-lg bg-white/10 hover:bg-white/20"
-              >
-                Become a Vendor
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+{
+id:16,
+name:"Massage Gun",
+description:"Muscle recovery massage gun used by athletes.",
+price:3499,
+rating:4.3,
+category:"best"
+},
 
-      {/* 🔥 CATEGORY SECTION */}
-      <section className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6">🛍 Product Categories</h2>
+/* ---------- FEATURED PRODUCTS ---------- */
 
-        <div className="flex gap-4 flex-wrap">
-          {categories.map(cat => (
-            <Link
-              key={cat.name}
-              to={`/products?category=${cat.name}`}
-              className={`px-6 py-3 rounded-xl ${cat.color} hover:scale-105 transition font-medium`}
-            >
-              {cat.name}
-            </Link>
-          ))}
-        </div>
-      </section>
+{
+id:17,
+name:"Minimalist Glycolic Acid",
+description:"8% exfoliating liquid for glowing skin.",
+price:699,
+rating:4.5,
+category:"featured"
+},
 
-      {/* MOST VIEWED */}
-      <section className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6">🔥 Most Viewed</h2>
+{
+id:18,
+name:"8X Shampoo",
+description:"Anti hair fall shampoo for stronger hair.",
+price:299,
+rating:3.9,
+category:"featured"
+},
 
-        <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
-          {mostViewed.map(p => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+{
+id:19,
+name:"MARS Makeup Kit",
+description:"Professional makeup kit with multiple shades.",
+price:1299,
+rating:4.2,
+category:"featured"
+},
 
-      {/* NEW ARRIVALS */}
-      <section className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6">🆕 New Arrivals</h2>
+{
+id:20,
+name:"Vegan Protein Powder",
+description:"Plant-based protein powder for muscle recovery.",
+price:1999,
+rating:4.7,
+category:"featured"
+},
 
-        <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
-          {newArrivals.map(p => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+{
+id:21,
+name:"Underarm Roll-On",
+description:"Long lasting anti-perspirant roll-on.",
+price:399,
+rating:4.1,
+category:"featured"
+},
 
-      {/* SALES */}
-      <section className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6 text-red-500">💸 Big Sale</h2>
+{
+id:22,
+name:"Travel Adapter",
+description:"Universal travel adapter for international use.",
+price:699,
+rating:4.0,
+category:"featured"
+},
 
-        <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
-          {salesProducts.map(p => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+{
+id:23,
+name:"Hand Gripper",
+description:"Grip strength trainer for workouts.",
+price:499,
+rating:3.8,
+category:"featured"
+},
 
-      {/* HOLI */}
-      <section className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-6 text-pink-500">🌈 Holi Festive Sale</h2>
+{
+id:24,
+name:"Hyaluronic Sunscreen SPF50",
+description:"Hydrating sunscreen protecting from UV damage.",
+price:799,
+rating:4.4,
+category:"featured"
+}
 
-        <div className="flex gap-6 overflow-x-auto pb-2 scrollbar-hide">
-          {holiProducts.map(p => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      </section>
+];
 
-    </div>
-  );
+return (
+<div className="space-y-16 pb-12 pt-20">
+
+<section className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+
+<motion.div
+initial={{opacity:0,y:20}}
+animate={{opacity:1,y:0}}
+transition={{duration:0.5}}
+>
+
+<div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-full text-sm mb-6">
+🛍 Best Online Collection Store
+</div>
+
+<h1 className="text-4xl lg:text-6xl font-bold leading-tight">
+Explore Trending Products
+<span className="text-green-600"> From Independent Vendors</span>
+</h1>
+
+<p className="mt-6 text-gray-600 max-w-lg">
+Discover curated collections and trending products in BizMart marketplace.
+</p>
+
+<div className="flex gap-4 mt-8">
+
+<Link
+to="/products"
+className="flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-full"
+>
+Shop Now <ArrowRight size={18}/>
+</Link>
+
+<Link
+to="/signup?role=vendor"
+className="px-6 py-3 border border-gray-300 rounded-full hover:bg-gray-100"
+>
+Become a Vendor
+</Link>
+
+</div>
+
+</motion.div>
+
+<div className="flex justify-center">
+<img src="/rocket-shop.jpeg" className="w-[380px] md:w-[450px]" />
+</div>
+
+</section>
+
+<PromoSection/>
+
+<ProductCollections products={products}/>
+
+</div>
+);
 }

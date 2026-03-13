@@ -1,198 +1,412 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  ShieldCheck, 
-  CreditCard, 
-  CheckCircle2, 
-  ArrowLeft, 
-  Lock,
-  MapPin
-} from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+ShieldCheck,
+CreditCard,
+CheckCircle2,
+ArrowLeft,
+MapPin
+} from "lucide-react";
+
+import PaymentForm from "../components/PaymentForm";
+import { useCart } from "../context/CartContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function CheckoutPage() {
-  const [step, setStep] = useState(1);
-  const { items, totalPrice, clearCart } = useCart();
-  const navigate = useNavigate();
-  const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleNext = () => setStep(step + 1);
-  const handleBack = () => setStep(step - 1);
+const [step, setStep] = useState(1);
+const [paymentMethod, setPaymentMethod] = useState("online");
 
-  const handleComplete = () => {
+const { items, totalPrice, clearCart } = useCart();
+const navigate = useNavigate();
+const [isSuccess, setIsSuccess] = useState(false);
 
-  // ✅ CREATE ORDER OBJECT
-  const newOrder = {
-    id: "BM-" + Math.floor(Math.random() * 100000),
-    date: new Date().toLocaleDateString(),
-    total: totalPrice,
-    status: "processing",
-    items: items
-  };
+const handleNext = () => setStep(step + 1);
+const handleBack = () => setStep(step - 1);
 
-  // ✅ SAVE TO LOCAL STORAGE
-  const existing = JSON.parse(localStorage.getItem("orders")) || [];
-  localStorage.setItem("orders", JSON.stringify([newOrder, ...existing]));
+const handleComplete = () => {
 
-  setIsSuccess(true);
+const handleComplete = () => {
 
-  setTimeout(() => {
-    clearCart();
-    navigate('/orders'); // ✅ direct orders page
-  }, 2000);
+const user = JSON.parse(localStorage.getItem("user"));
+
+const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+const newOrder = {
+id: "BM-" + Math.floor(Math.random() * 100000),
+date: new Date().toLocaleDateString(),
+customer: user?.email,
+total: totalPrice,
+items,
+status: paymentMethod === "cod" ? "COD Pending" : "Paid"
 };
-  if (isSuccess) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <motion.div 
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="inline-flex items-center justify-center w-24 h-24 bg-emerald-100 dark:bg-emerald-900/30 rounded-full mb-8"
-        >
-          <CheckCircle2 className="w-12 h-12 text-emerald-500" />
-        </motion.div>
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">Order Confirmed!</h1>
-        <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-md mx-auto">
-          Thank you for your purchase. Your order #BM-92841 has been placed and is being processed.
-        </p>
-        <div className="flex justify-center gap-4">
-          <button onClick={() => navigate('/orders')} className="btn-secondary px-8 py-3">View Order</button>
-          <button onClick={() => navigate('/')} className="btn-primary px-8 py-3">Back to Home</button>
-        </div>
-      </div>
-    );
-  }
 
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center gap-4 mb-8">
-        <button onClick={() => navigate('/cart')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full">
-          <ArrowLeft className="w-6 h-6" />
-        </button>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Checkout</h1>
-      </div>
+orders.push(newOrder);
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+localStorage.setItem("orders", JSON.stringify(orders));
 
-        {/* LEFT SIDE */}
-        <div className="lg:col-span-2 space-y-8">
+setIsSuccess(true);
 
-          {/* PROGRESS */}
-          <div className="flex items-center justify-between relative mb-12">
-            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 dark:bg-slate-800 -translate-y-1/2 z-0" />
-            {[1,2,3].map((n) => (
-              <div key={n} className="relative z-10 flex flex-col items-center gap-2">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                  step >= n ? 'bg-primary text-white' : 'bg-slate-100 text-slate-400'
-                }`}>
-                  {step > n ? <CheckCircle2 className="w-6 h-6" /> : n}
-                </div>
-                <span className={`text-xs font-bold ${step >= n ? 'text-primary' : 'text-slate-400'}`}>
-                  {n === 1 ? 'Shipping' : n === 2 ? 'Payment' : 'Review'}
-                </span>
-              </div>
-            ))}
-          </div>
+setTimeout(() => {
+clearCart();
+navigate("/orders");
+}, 2000);
 
-          <AnimatePresence mode="wait">
+};
 
-            {/* STEP 1 */}
-            {step === 1 && (
-              <motion.div key="1" initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-20}}>
-                <div className="card p-6 space-y-4">
-                  <h2 className="text-xl font-bold flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-primary"/> Shipping Info
-                  </h2>
+const existing = JSON.parse(localStorage.getItem("orders")) || [];
 
-                  <input className="input-field" placeholder="Full Name"/>
-                  <input className="input-field" placeholder="Address"/>
-                  <input className="input-field" placeholder="City"/>
-                  <input className="input-field" placeholder="Postal Code"/>
-                </div>
+localStorage.setItem(
+  "orders",
+  JSON.stringify([newOrder, ...existing])
+);
 
-                <button onClick={handleNext} className="w-full btn-primary py-4 mt-4">
-                  Continue
-                </button>
-              </motion.div>
-            )}
+setIsSuccess(true);
 
-            {/* STEP 2 */}
-            {step === 2 && (
-              <motion.div key="2" initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-20}}>
-                <div className="card p-6 space-y-4">
-                  <h2 className="text-xl font-bold flex items-center gap-2">
-                    <CreditCard className="w-5 h-5 text-primary"/> Payment
-                  </h2>
+setTimeout(() => {
+  clearCart();
+  navigate("/orders");
+}, 2000);
 
-                  <input className="input-field" placeholder="Card Number"/>
-                  <input className="input-field" placeholder="Expiry"/>
-                  <input className="input-field" placeholder="CVV"/>
-                </div>
+};
 
-                <div className="flex gap-4 mt-4">
-                  <button onClick={handleBack} className="flex-1 btn-secondary py-4">Back</button>
-                  <button onClick={handleNext} className="flex-1 btn-primary py-4">Next</button>
-                </div>
-              </motion.div>
-            )}
+if (isSuccess) {
+return (
+<div className="max-w-6xl mx-auto pt-32 px-6 pb-20 text-center">
 
-            {/* STEP 3 */}
-            {step === 3 && (
-              <motion.div key="3" initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} exit={{opacity:0,x:-20}}>
-                <div className="card p-6 space-y-4">
-                  <h2 className="text-xl font-bold">Review Order</h2>
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      className="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-8"
+    >
+      <CheckCircle2 className="w-12 h-12 text-green-600" />
+    </motion.div>
 
-                  {items.map((item) => (
-                    <div key={item.productId} className="flex justify-between items-center">
-                      <div className="flex gap-3 items-center">
-                        <img 
-                          src={item.product.images?.[0] || 'https://via.placeholder.com/100'} 
-                          className="w-12 h-12 rounded"
-                        />
-                        <span>{item.product.name}</span>
-                      </div>
-                      <span>${(item.product.price * item.quantity).toFixed(2)}</span>
-                    </div>
-                  ))}
-                </div>
+    <h1 className="text-4xl font-bold mb-4">
+      Order Confirmed!
+    </h1>
 
-                <div className="flex gap-4 mt-4">
-                  <button onClick={handleBack} className="flex-1 btn-secondary py-4">Back</button>
-                  <button onClick={handleComplete} className="flex-1 btn-primary py-4">Place Order</button>
-                </div>
-              </motion.div>
-            )}
+    <p className="text-gray-500 mb-8">
+      Thank you for your purchase.
+    </p>
 
-          </AnimatePresence>
-        </div>
+    <div className="flex justify-center gap-4">
+      <button
+        onClick={() => navigate("/orders")}
+        className="px-6 py-3 border rounded-lg"
+      >
+        View Orders
+      </button>
 
-        {/* RIGHT SIDE */}
-        <div className="card p-6 space-y-4">
-          <h2 className="text-xl font-bold">Summary</h2>
-
-          <div className="flex justify-between">
-            <span>Subtotal</span>
-            <span>${totalPrice.toFixed(2)}</span>
-          </div>
-
-          <div className="flex justify-between">
-            <span>Tax</span>
-            <span>${(totalPrice * 0.08).toFixed(2)}</span>
-          </div>
-
-          <div className="flex justify-between font-bold text-lg">
-            <span>Total</span>
-            <span>${(totalPrice * 1.08).toFixed(2)}</span>
-          </div>
-
-          <div className="flex items-center gap-2 text-sm text-slate-500">
-            <ShieldCheck className="w-5 h-5 text-emerald-500"/>
-            Secure Checkout
-          </div>
-        </div>
-
-      </div>
+      <button
+        onClick={() => navigate("/")}
+        className="px-6 py-3 bg-green-600 text-white rounded-lg"
+      >
+        Back Home
+      </button>
     </div>
-  );
+
+  </div>
+);
+
+}
+
+return (
+
+<div className="max-w-7xl mx-auto pt-32 px-6 pb-20">
+
+  {/* HEADER */}
+
+  <div className="flex items-center gap-4 mb-10">
+
+    <button
+      onClick={() => navigate("/cart")}
+      className="p-2 rounded-full hover:bg-gray-100"
+    >
+      <ArrowLeft size={22}/>
+    </button>
+
+    <h1 className="text-3xl font-bold">
+      Checkout
+    </h1>
+
+  </div>
+
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+    {/* LEFT */}
+
+    <div className="lg:col-span-2">
+
+      {/* STEPS */}
+
+      <div className="flex justify-between mb-10">
+
+        {["Shipping", "Payment", "Review"].map((label, i) => (
+
+          <div key={i} className="flex flex-col items-center gap-2">
+
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full font-bold ${
+                step >= i + 1
+                  ? "bg-green-600 text-white"
+                  : "bg-gray-200"
+              }`}
+            >
+              {i + 1}
+            </div>
+
+            <span className="text-sm">{label}</span>
+
+          </div>
+
+        ))}
+
+      </div>
+
+      <AnimatePresence mode="wait">
+
+        {/* STEP 1 SHIPPING */}
+
+        {step === 1 && (
+
+          <motion.div
+            key="1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+
+            <div className="bg-white border rounded-xl p-6 shadow-sm space-y-4">
+
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <MapPin size={20}/>
+                Shipping Information
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <input
+                  placeholder="Full Name"
+                  className="border rounded-lg px-4 py-3"
+                />
+
+                <input
+                  placeholder="Address"
+                  className="border rounded-lg px-4 py-3"
+                />
+
+                <input
+                  placeholder="City"
+                  className="border rounded-lg px-4 py-3"
+                />
+
+                <input
+                  placeholder="Postal Code"
+                  className="border rounded-lg px-4 py-3"
+                />
+
+              </div>
+
+            </div>
+
+            <div className="flex gap-4 mt-6">
+
+              <button
+                onClick={() => navigate("/cart")}
+                className="flex-1 border py-3 rounded-lg"
+              >
+                Back
+              </button>
+
+              <button
+                onClick={handleNext}
+                className="flex-1 bg-green-600 text-white py-3 rounded-lg"
+              >
+                Continue
+              </button>
+
+            </div>
+
+          </motion.div>
+
+        )}
+
+        {/* STEP 2 PAYMENT */}
+
+        {step === 2 && (
+
+          <motion.div
+            key="2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+
+            <div className="bg-white border rounded-xl p-6 shadow-sm space-y-6">
+
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <CreditCard size={20}/>
+                Payment Method
+              </h2>
+
+              {/* ONLINE PAYMENT */}
+
+              <label className="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
+
+                <input
+                  type="radio"
+                  name="payment"
+                  value="online"
+                  checked={paymentMethod === "online"}
+                  onChange={() => setPaymentMethod("online")}
+                  className="accent-green-600"
+                />
+
+                <span>UPI / Card / Netbanking</span>
+
+              </label>
+
+              {/* COD */}
+
+              <label className="flex items-center gap-3 border p-4 rounded-lg cursor-pointer">
+
+                <input
+                  type="radio"
+                  name="payment"
+                  value="cod"
+                  checked={paymentMethod === "cod"}
+                  onChange={() => setPaymentMethod("cod")}
+                  className="accent-green-600"
+                />
+
+                <span>Cash on Delivery</span>
+
+              </label>
+
+              {/* PAYMENT BUTTON */}
+
+              {paymentMethod === "online" ? (
+                <PaymentForm onSuccess={handleNext}/>
+              ) : (
+                <button
+                  onClick={handleNext}
+                  className="w-full bg-green-600 text-white py-3 rounded-lg"
+                >
+                  Continue with COD
+                </button>
+              )}
+
+            </div>
+
+            <button
+              onClick={handleBack}
+              className="mt-4 border px-6 py-3 rounded-lg"
+            >
+              Back
+            </button>
+
+          </motion.div>
+
+        )}
+
+        {/* STEP 3 REVIEW */}
+
+        {step === 3 && (
+
+          <motion.div
+            key="3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+
+            <div className="bg-white border rounded-xl p-6 space-y-4">
+
+              <h2 className="text-xl font-semibold">
+                Review Order
+              </h2>
+
+              {items.map((item) => (
+
+                <div
+                  key={item.productId}
+                  className="flex justify-between"
+                >
+
+                  <span>
+                    {item.product.name} x {item.quantity}
+                  </span>
+
+                  <span>
+                    ₹{item.product.price * item.quantity}
+                  </span>
+
+                </div>
+
+              ))}
+
+            </div>
+
+            <div className="flex gap-4 mt-6">
+
+              <button
+                onClick={handleBack}
+                className="flex-1 border py-3 rounded-lg"
+              >
+                Back
+              </button>
+
+              <button
+                onClick={handleComplete}
+                className="flex-1 bg-green-600 text-white py-3 rounded-lg"
+              >
+                Place Order
+              </button>
+
+            </div>
+
+          </motion.div>
+
+        )}
+
+      </AnimatePresence>
+
+    </div>
+
+    {/* RIGHT SUMMARY */}
+
+    <div className="bg-white border rounded-xl p-6 h-fit">
+
+      <h2 className="text-xl font-semibold mb-6">
+        Summary
+      </h2>
+
+      <div className="flex justify-between mb-3">
+        <span>Subtotal</span>
+        <span>₹{totalPrice}</span>
+      </div>
+
+      <div className="flex justify-between mb-3">
+        <span>Tax</span>
+        <span>₹{(totalPrice * 0.08).toFixed(2)}</span>
+      </div>
+
+      <div className="flex justify-between text-lg font-bold">
+        <span>Total</span>
+        <span>₹{(totalPrice * 1.08).toFixed(2)}</span>
+      </div>
+
+      <div className="flex items-center gap-2 text-sm text-gray-500 mt-4">
+        <ShieldCheck size={18}/>
+        Secure Checkout
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+);
 }

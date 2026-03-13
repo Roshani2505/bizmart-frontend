@@ -1,181 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import { Heart, ShoppingCart } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { useWishlist } from '../context/WishlistContext';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
-import { cn } from '../lib/utils';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from "react";
+import { Heart, ShoppingCart } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import { useWishlist } from "../context/WishlistContext";
+import { Link } from "react-router-dom";
 
 export default function ProductCard({ product }) {
-  const { addToCart } = useCart();
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
 
-  const [currentImage, setCurrentImage] = useState(0);
-  const [animateHeart, setAnimateHeart] = useState(false);
-  const [animateCart, setAnimateCart] = useState(false);
+const { addToCart } = useCart();
+const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
-  const isLiked = isInWishlist(product.id);
+const [liked,setLiked] = useState(isInWishlist(product.id));
 
-  // ✅ SAFE IMAGE
-  const safeImages = product.images?.length
-    ? product.images
-    : [
-        product.image ||
-        `https://source.unsplash.com/400x400/?${encodeURIComponent(product.name || "product")}`
-      ];
+const toggleWishlist=(e)=>{
+e.stopPropagation();
+e.preventDefault();
 
-  useEffect(() => {
-    if (!safeImages.length) return;
+if(liked){
+removeFromWishlist(product.id);
+}else{
+addToWishlist(product);
+}
 
-    const interval = setInterval(() => {
-      setCurrentImage(prev => (prev + 1) % safeImages.length);
-    }, 2500);
+setLiked(!liked);
+};
 
-    return () => clearInterval(interval);
-  }, [safeImages]);
+const handleCart=(e)=>{
+e.stopPropagation();
+e.preventDefault();
+addToCart(product);
+};
 
-  // ❤️ WISHLIST (NO LOGIN REQUIRED)
-  const toggleWishlist = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
+return(
 
-    const cleanProduct = {
-      ...product,
-      images: safeImages
-    };
+<div className="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden group">
 
-    if (isLiked) {
-      removeFromWishlist(product.id);
-    } else {
-      addToWishlist(cleanProduct);
-      setAnimateHeart(true);
-      setTimeout(() => setAnimateHeart(false), 800);
-    }
-  };
+<Link to={`/product/${product.id}`}>
 
-  // 🛒 CART (LOGIN REQUIRED)
-  const handleCart = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
+<div className="relative h-52 overflow-hidden">
 
-    if (!isAuthenticated) {
-      navigate('/login?redirect=/products');
-      return;
-    }
+<img
+src={product.images?.[0] || `https://source.unsplash.com/400x400/?product`}
+className="w-full h-full object-cover group-hover:scale-105 transition"
+/>
 
-    addToCart(product);
-    setAnimateCart(true);
-    setTimeout(() => setAnimateCart(false), 800);
-  };
+<button
+onClick={toggleWishlist}
+className={`absolute top-2 right-2 p-2 rounded-full
+${liked ? "bg-red-500 text-white":"bg-white"}`}
+>
+<Heart size={16}/>
+</button>
 
-  const discountedPrice = product.discount
-    ? Math.round(product.price * (1 - product.discount / 100))
-    : null;
+</div>
 
-  return (
-    <div className="card relative overflow-hidden group">
+</Link>
 
-      {/* SALE */}
-      {product.discount && (
-        <div className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded z-20">
-          {product.discount}% OFF
-        </div>
-      )}
+<div className="p-4">
 
-      {/* ❤️ Animation */}
-      <AnimatePresence>
-        {animateHeart && (
-          <motion.div
-            initial={{ opacity: 1, y: 0 }}
-            animate={{ opacity: 0, y: -80 }}
-            transition={{ duration: 0.8 }}
-            className="absolute top-4 right-4 text-red-500 text-xl z-20"
-          >
-            ❤️
-          </motion.div>
-        )}
-      </AnimatePresence>
+<h3 className="text-sm font-semibold mb-2">
+{product.name}
+</h3>
 
-      {/* 🛒 Animation */}
-      <AnimatePresence>
-        {animateCart && (
-          <motion.div
-            initial={{ opacity: 1, y: 0 }}
-            animate={{ opacity: 0, y: -80 }}
-            transition={{ duration: 0.8 }}
-            className="absolute bottom-4 right-4 text-green-500 text-xl z-20"
-          >
-            🛒
-          </motion.div>
-        )}
-      </AnimatePresence>
+<p className="text-yellow-500 text-sm mb-1">
+⭐ {product.rating}
+</p>
 
-      {/* ❤️ BUTTON */}
-      <button
-        onClick={toggleWishlist}
-        className={cn(
-          "absolute top-2 right-2 z-20 p-1.5 rounded-full",
-          isLiked ? "bg-red-500 text-white" : "bg-white/80 text-slate-400"
-        )}
-      >
-        <Heart className="w-4 h-4" fill={isLiked ? "white" : "none"} />
-      </button>
+<div className="flex items-center justify-between">
 
-      {/* IMAGE */}
-      <Link to={`/product/${product.id}`}>
-        <div className="relative h-48 overflow-hidden">
-          <img
-            src={safeImages[currentImage]}
-            className="w-full h-full object-cover"
-          />
+<p className="font-bold">
+₹{product.price}
+</p>
 
-          {/* DOTS */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-            {safeImages.map((_, i) => (
-              <div
-                key={i}
-                className={cn(
-                  "w-2 h-2 rounded-full",
-                  i === currentImage ? "bg-white" : "bg-white/40"
-                )}
-              />
-            ))}
-          </div>
-        </div>
-      </Link>
+<button
+onClick={handleCart}
+className="p-2 bg-gray-100 rounded hover:bg-green-600 hover:text-white"
+>
+<ShoppingCart size={16}/>
+</button>
 
-      {/* CONTENT */}
-      <div className="p-4">
-        <h3 className="text-sm font-semibold">{product.name}</h3>
+</div>
 
-        <div className="flex justify-between items-center mt-3">
-          <div className="flex flex-col">
-            {product.discount ? (
-              <>
-                <span className="font-bold text-red-500">
-                  ₹{discountedPrice}
-                </span>
-                <span className="text-xs line-through text-gray-400">
-                  ₹{product.price}
-                </span>
-              </>
-            ) : (
-              <span className="font-bold">₹{product.price}</span>
-            )}
-          </div>
+</div>
 
-          <button
-            onClick={handleCart}
-            className="p-2 bg-slate-100 rounded-md hover:bg-primary hover:text-white"
-          >
-            <ShoppingCart className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
+</div>
 
-    </div>
-  );
+);
 }

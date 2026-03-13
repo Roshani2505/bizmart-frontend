@@ -1,61 +1,74 @@
-import React, { createContext, useContext, useState } from 'react';
-import API from '../services/api';
+import React, { createContext, useContext, useState } from "react";
 
-const AuthContext = createContext(undefined);
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
 
-  // ✅ LOGIN
-  const login = async (email, password) => {
-    try {
-      const res = await API.post('/auth/login', { email, password });
+const [user, setUser] = useState(
+JSON.parse(localStorage.getItem("user")) || null
+);
 
-      // 🔥 SAVE TOKEN
-      localStorage.setItem("token", res.data.token);
+const login = async (email, password) => {
 
-      // 🔥 SET USER
-      setUser(res.data.user);
+const users = JSON.parse(localStorage.getItem("users")) || [];
 
-      return res.data;
+const found = users.find(
+  u => u.email === email && u.password === password
+);
 
-    } catch (err) {
-      alert("Wrong email or password ❌");
-      throw err;
-    }
-  };
+if (!found) {
+  alert("Wrong email or password ❌");
+  throw new Error("login failed");
+}
 
-  // ✅ SIGNUP
-  const signup = async (data) => {
-    try {
-      const res = await API.post('/auth/signup', data);
-      return res.data;
-    } catch (err) {
-      alert("Signup error ❌");
-    }
-  };
+if (found.role === "vendor" && !found.approved) {
+  alert("Vendor account waiting for admin approval");
+  return;
+}
 
-  // ✅ LOGOUT
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-  };
+localStorage.setItem("user", JSON.stringify(found));
+setUser(found);
 
-  return (
-    <AuthContext.Provider value={{
-      user,
-      login,
-      signup,
-      logout,
-      isAuthenticated: !!user,
-    }}>
-      {children}
-    </AuthContext.Provider>
-  );
+};
+
+const signup = async (data) => {
+
+const users = JSON.parse(localStorage.getItem("users")) || [];
+
+const newUser = {
+  ...data,
+  approved: data.role === "vendor" ? false : true
+};
+
+users.push(newUser);
+
+localStorage.setItem("users", JSON.stringify(users));
+
+alert("Signup successful");
+
+};
+
+const logout = () => {
+localStorage.removeItem("user");
+setUser(null);
+};
+
+return (
+<AuthContext.Provider
+value={{
+user,
+login,
+signup,
+logout,
+isAuthenticated: !!user
+}}
+>
+{children}
+</AuthContext.Provider>
+);
+
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
-  return context;
+return useContext(AuthContext);
 }
