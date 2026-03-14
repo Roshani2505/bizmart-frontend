@@ -1,21 +1,51 @@
 @import "tailwindcss";
 
-/* Smooth theme transition */
+/* GLOBAL FONT */
 
 body{
-  transition: background 0.3s ease, color 0.3s ease;
+  font-family: Inter, system-ui, sans-serif;
+  background:#f6eee9;
+  color:#2d2d2d;
 }
 
-/* LIGHT THEME */
+/* MAIN PAGE BACKGROUND */
 
-.light{
-  background:#FAFAF9;
-  color:#1E293B;
+.site-bg{
+  background:#f6eee9;
 }
 
-/* DARK THEME */
+/* CARD STYLE */
 
-.dark{
-  background:#020617;
-  color:#F8FAFC;
+.card{
+  background:#fff7f4;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.05);
+}
+
+/* PRIMARY BUTTON */
+
+.btn-primary{
+  background:#d98b8b;
+  color:white;
+  padding:12px 20px;
+  border-radius:999px;
+  font-weight:600;
+  transition:0.25s;
+}
+
+.btn-primary:hover{
+  background:#c97979;
+}
+
+/* SECONDARY BUTTON */
+
+.btn-outline{
+  border:1px solid #e5d5cd;
+  padding:12px 20px;
+  border-radius:999px;
+}
+
+.btn-outline:hover{
+  background:#f3e3dc;
 }

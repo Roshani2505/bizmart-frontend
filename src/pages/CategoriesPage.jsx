@@ -16,8 +16,8 @@ return(
 Browse Categories
 </h1>
 
-<p className="text-gray-500 max-w-xl mx-auto">
-Delivering <span className="text-green-600 font-semibold">
+<p className="text-[#7a6a64] max-w-xl mx-auto">
+Delivering <span className="text-[#c97979] font-semibold">
 20+ trusted product categories
 </span>. Explore now and discover everything.
 </p>
@@ -31,7 +31,7 @@ Delivering <span className="text-green-600 font-semibold">
 <button
 key={cat.slug}
 onClick={()=>navigate(`/category/${cat.slug}`)}
-className="group bg-gray-50 border border-gray-200 rounded-2xl p-6 text-center transition duration-300 hover:shadow-xl hover:scale-105"
+className="group bg-[#fff7f4] border border-[#ead7cf] rounded-2xl p-6 text-center transition hover:shadow-xl hover:scale-105"
 >
 
 <div className="flex justify-center mb-4">

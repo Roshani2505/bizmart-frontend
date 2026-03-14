@@ -1,6 +1,6 @@
 export const PRODUCTS = [
 
-/* MOBILES */
+/* ---------------- MOBILES ---------------- */
 
 {
 id:"mob1",
@@ -38,7 +38,7 @@ category:"Mobiles",
 images:["https://images.unsplash.com/photo-1598327105666-5b89351aff97"]
 },
 
-/* LAPTOPS */
+/* ---------------- LAPTOPS ---------------- */
 
 {
 id:"lap1",
@@ -67,7 +67,7 @@ category:"Laptops",
 images:["https://images.unsplash.com/photo-1496181133206-80ce9b88a853"]
 },
 
-/* FASHION */
+/* ---------------- FASHION ---------------- */
 
 {
 id:"top1",
@@ -105,7 +105,7 @@ category:"Bottomwear",
 images:["https://images.unsplash.com/photo-1542272604-787c3835535d"]
 },
 
-/* WATCHES */
+/* ---------------- WATCHES ---------------- */
 
 {
 id:"watch1",
@@ -134,7 +134,7 @@ category:"Watches",
 images:["https://images.unsplash.com/photo-1523275335684-37898b6baf30"]
 },
 
-/* BEAUTY */
+/* ---------------- BEAUTY ---------------- */
 
 {
 id:"beauty1",
@@ -163,7 +163,7 @@ category:"Makeup Kits",
 images:["https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"]
 },
 
-/* FITNESS */
+/* ---------------- FITNESS ---------------- */
 
 {
 id:"fit1",

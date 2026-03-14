@@ -14,14 +14,14 @@ return !!user;
 useEffect(() => {
 
 if (!isLoggedIn()) {
-  setItems([]);
-  return;
+setItems([]);
+return;
 }
 
 const saved = localStorage.getItem("cart");
 
 if (saved) {
-  setItems(JSON.parse(saved));
+setItems(JSON.parse(saved));
 }
 
 }, []);
@@ -29,7 +29,7 @@ if (saved) {
 useEffect(() => {
 
 if (isLoggedIn()) {
-  localStorage.setItem("cart", JSON.stringify(items));
+localStorage.setItem("cart", JSON.stringify(items));
 }
 
 }, [items]);
@@ -37,33 +37,33 @@ if (isLoggedIn()) {
 const addToCart = (product, quantity = 1) => {
 
 if (!isLoggedIn()) {
-  alert("Please login first to add items to cart");
-  window.location.href = "/login";
-  return;
+alert("Please login first to add items to cart");
+window.location.href = "/login";
+return;
 }
 
 setItems(prev => {
 
-  const existing = prev.find(i => i.productId === product.id);
+const existing = prev.find(i => i.productId === product.id);
 
-  if (existing) {
+if (existing) {
 
-    return prev.map(i =>
-      i.productId === product.id
-        ? { ...i, quantity: i.quantity + quantity }
-        : i
-    );
+return prev.map(i =>
+i.productId === product.id
+? { ...i, quantity: i.quantity + quantity }
+: i
+);
 
-  }
+}
 
-  return [
-    ...prev,
-    {
-      productId: product.id,
-      quantity,
-      product
-    }
-  ];
+return [
+...prev,
+{
+productId: product.id,
+quantity,
+product
+}
+];
 
 });
 
@@ -78,13 +78,18 @@ const updateQuantity = (productId, quantity) => {
 if (quantity < 1) return;
 
 setItems(prev =>
-  prev.map(i =>
-    i.productId === productId
-      ? { ...i, quantity }
-      : i
-  )
+prev.map(i =>
+i.productId === productId
+? { ...i, quantity }
+: i
+)
 );
 
+};
+
+const clearCart = () => {
+setItems([]);
+localStorage.removeItem("cart");
 };
 
 const totalItems = items.reduce(
@@ -104,6 +109,7 @@ items,
 addToCart,
 removeFromCart,
 updateQuantity,
+clearCart,
 totalItems,
 totalPrice
 }}

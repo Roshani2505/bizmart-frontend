@@ -17,6 +17,7 @@ export default function PaymentForm({ onSuccess }) {
       setLoading(false);
       setShowGateway(true);
     }, 1500);
+
   };
 
   const handleSubmit = () => {
@@ -34,18 +35,18 @@ export default function PaymentForm({ onSuccess }) {
 
         <button
           onClick={handlePay}
-          className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold"
+          className="w-full bg-[#d98b8b] text-white py-3 rounded-lg font-semibold hover:bg-[#c97979] transition"
         >
           {loading ? "Processing Payment..." : `Pay ₹${totalPrice}`}
         </button>
 
       )}
 
-      {/* GATEWAY MODAL */}
+      {/* GATEWAY */}
 
       {showGateway && (
 
-        <div className="border rounded-lg p-6 space-y-4 bg-gray-50">
+        <div className="border border-[#ead7cf] rounded-lg p-6 space-y-4 bg-[#fff7f4]">
 
           <h3 className="text-lg font-semibold">
             Choose Payment Method
@@ -57,8 +58,8 @@ export default function PaymentForm({ onSuccess }) {
 
             <button
               onClick={() => setMethod("upi")}
-              className={`px-4 py-2 border rounded ${
-                method === "upi" ? "bg-green-100" : ""
+              className={`px-4 py-2 border border-[#ead7cf] rounded ${
+                method === "upi" ? "bg-[#f3e3dc]" : ""
               }`}
             >
               UPI
@@ -66,8 +67,8 @@ export default function PaymentForm({ onSuccess }) {
 
             <button
               onClick={() => setMethod("card")}
-              className={`px-4 py-2 border rounded ${
-                method === "card" ? "bg-green-100" : ""
+              className={`px-4 py-2 border border-[#ead7cf] rounded ${
+                method === "card" ? "bg-[#f3e3dc]" : ""
               }`}
             >
               Card
@@ -75,8 +76,8 @@ export default function PaymentForm({ onSuccess }) {
 
             <button
               onClick={() => setMethod("netbanking")}
-              className={`px-4 py-2 border rounded ${
-                method === "netbanking" ? "bg-green-100" : ""
+              className={`px-4 py-2 border border-[#ead7cf] rounded ${
+                method === "netbanking" ? "bg-[#f3e3dc]" : ""
               }`}
             >
               Netbanking
@@ -92,12 +93,12 @@ export default function PaymentForm({ onSuccess }) {
 
               <input
                 placeholder="Enter UPI ID (example@upi)"
-                className="border rounded-lg px-4 py-2 w-full"
+                className="border border-[#ead7cf] rounded-lg px-4 py-2 w-full"
               />
 
               <button
                 onClick={handleSubmit}
-                className="bg-green-600 text-white px-6 py-2 rounded"
+                className="bg-[#d98b8b] text-white px-6 py-2 rounded hover:bg-[#c97979] transition"
               >
                 Pay via UPI
               </button>
@@ -114,31 +115,31 @@ export default function PaymentForm({ onSuccess }) {
 
               <input
                 placeholder="Card Number"
-                className="border rounded-lg px-4 py-2 w-full"
+                className="border border-[#ead7cf] rounded-lg px-4 py-2 w-full"
               />
 
               <input
                 placeholder="Card Holder Name"
-                className="border rounded-lg px-4 py-2 w-full"
+                className="border border-[#ead7cf] rounded-lg px-4 py-2 w-full"
               />
 
               <div className="flex gap-3">
 
                 <input
                   placeholder="MM/YY"
-                  className="border rounded-lg px-4 py-2 w-full"
+                  className="border border-[#ead7cf] rounded-lg px-4 py-2 w-full"
                 />
 
                 <input
                   placeholder="CVV"
-                  className="border rounded-lg px-4 py-2 w-full"
+                  className="border border-[#ead7cf] rounded-lg px-4 py-2 w-full"
                 />
 
               </div>
 
               <button
                 onClick={handleSubmit}
-                className="bg-green-600 text-white px-6 py-2 rounded"
+                className="bg-[#d98b8b] text-white px-6 py-2 rounded hover:bg-[#c97979] transition"
               >
                 Pay via Card
               </button>
@@ -153,7 +154,7 @@ export default function PaymentForm({ onSuccess }) {
 
             <div className="space-y-3">
 
-              <select className="border rounded-lg px-4 py-2 w-full">
+              <select className="border border-[#ead7cf] rounded-lg px-4 py-2 w-full">
 
                 <option>Select Bank</option>
                 <option>SBI</option>
@@ -165,7 +166,7 @@ export default function PaymentForm({ onSuccess }) {
 
               <button
                 onClick={handleSubmit}
-                className="bg-green-600 text-white px-6 py-2 rounded"
+                className="bg-[#d98b8b] text-white px-6 py-2 rounded hover:bg-[#c97979] transition"
               >
                 Continue to Bank
               </button>

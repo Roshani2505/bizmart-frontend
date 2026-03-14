@@ -87,7 +87,6 @@ sections:[
 
 {
 name:"Men Accessories",
-
 sub:[
 "Belt",
 "Sunglasses",
@@ -98,12 +97,10 @@ sub:[
 "Wallet",
 "Card Holder"
 ]
-
 },
 
 {
 name:"Women Accessories",
-
 sub:[
 "Earrings",
 "Necklace",
@@ -119,7 +116,6 @@ sub:[
 "Women Belts",
 "Stoles & Scarves"
 ]
-
 }
 
 ]
@@ -133,10 +129,8 @@ slug:"home-decor",
 image:"/categories/home-decor.jpg",
 
 sections:[
-
 {
 name:"Decor",
-
 sub:[
 "Wall Clocks",
 "Paintings",
@@ -144,9 +138,7 @@ sub:[
 "Showpieces",
 "Curtains"
 ]
-
 }
-
 ]
 },
 
@@ -158,10 +150,8 @@ slug:"appliances",
 image:"/categories/appliances.jpg",
 
 sections:[
-
 {
 name:"Home Appliances",
-
 sub:[
 "TV",
 "Refrigerator",
@@ -169,9 +159,7 @@ sub:[
 "Air Conditioner",
 "Heater"
 ]
-
 }
-
 ]
 },
 
@@ -183,10 +171,8 @@ slug:"kitchen",
 image:"/categories/cookware.jpg",
 
 sections:[
-
 {
 name:"Kitchen",
-
 sub:[
 "Cookware",
 "Storage Containers",
@@ -194,9 +180,7 @@ sub:[
 "Kitchen Appliances",
 "Water Bottles"
 ]
-
 }
-
 ]
 },
 
@@ -208,10 +192,8 @@ slug:"groceries",
 image:"/categories/groceries.jpg",
 
 sections:[
-
 {
 name:"Daily Essentials",
-
 sub:[
 "Snacks",
 "Beverages",
@@ -219,9 +201,7 @@ sub:[
 "Dry Fruits",
 "Spices"
 ]
-
 }
-
 ]
 },
 
@@ -233,10 +213,8 @@ slug:"kids-toys",
 image:"/categories/toys.jpg",
 
 sections:[
-
 {
 name:"Toys",
-
 sub:[
 "Soft Toys",
 "Educational Toys",
@@ -244,9 +222,7 @@ sub:[
 "Building Blocks",
 "Dolls"
 ]
-
 }
-
 ]
 },
 
@@ -258,10 +234,8 @@ slug:"sports",
 image:"/categories/sports.jpg",
 
 sections:[
-
 {
 name:"Fitness",
-
 sub:[
 "Dumbbells",
 "Yoga Mats",
@@ -269,9 +243,7 @@ sub:[
 "Resistance Bands",
 "Gym Gloves"
 ]
-
 }
-
 ]
 },
 
@@ -283,10 +255,8 @@ slug:"gifting",
 image:"/categories/gifting.jpg",
 
 sections:[
-
 {
 name:"Gift Items",
-
 sub:[
 "Gift Hampers",
 "Photo Frames",
@@ -294,9 +264,7 @@ sub:[
 "Personalized Gifts",
 "Gift Cards"
 ]
-
 }
-
 ]
 },
 
@@ -311,7 +279,6 @@ sections:[
 
 {
 name:"Beauty",
-
 sub:[
 "Lipsticks",
 "Perfumes",
@@ -319,12 +286,10 @@ sub:[
 "Face Wash",
 "Nail Kits"
 ]
-
 },
 
 {
 name:"Personal Care",
-
 sub:[
 "Shampoo",
 "Hair Oil",
@@ -332,7 +297,6 @@ sub:[
 "Face Serum",
 "Body Wash"
 ]
-
 }
 
 ]
@@ -346,10 +310,8 @@ slug:"footwear",
 image:"/categories/footwear.jpg",
 
 sections:[
-
 {
 name:"Shoes",
-
 sub:[
 "Men Shoes",
 "Women Heels",
@@ -357,9 +319,7 @@ sub:[
 "Sandals",
 "Kids Shoes"
 ]
-
 }
-
 ]
 },
 
@@ -371,10 +331,8 @@ slug:"gaming",
 image:"/categories/gaming.jpg",
 
 sections:[
-
 {
 name:"Gaming Gear",
-
 sub:[
 "Gaming Consoles",
 "Gaming Controllers",
@@ -382,9 +340,7 @@ sub:[
 "Gaming Mouse",
 "Gaming Keyboards"
 ]
-
 }
-
 ]
 },
 
@@ -396,10 +352,8 @@ slug:"stationery",
 image:"/categories/stationery.jpg",
 
 sections:[
-
 {
 name:"Office Supplies",
-
 sub:[
 "Notebooks",
 "Pens",
@@ -407,9 +361,7 @@ sub:[
 "Art Supplies",
 "Office Stationery"
 ]
-
 }
-
 ]
 },
 
@@ -421,10 +373,8 @@ slug:"pets",
 image:"/categories/pet.jpg",
 
 sections:[
-
 {
 name:"Pet Essentials",
-
 sub:[
 "Dog Food",
 "Pet Toys",
@@ -432,9 +382,7 @@ sub:[
 "Pet Beds",
 "Pet Bowls"
 ]
-
 }
-
 ]
 },
 
@@ -446,10 +394,8 @@ slug:"travel",
 image:"/categories/travel.png",
 
 sections:[
-
 {
 name:"Travel",
-
 sub:[
 "Travel Bags",
 "Suitcases",
@@ -457,9 +403,7 @@ sub:[
 "Travel Adapters",
 "Travel Organizers"
 ]
-
 }
-
 ]
 },
 
@@ -471,10 +415,8 @@ slug:"health",
 image:"/categories/health.png",
 
 sections:[
-
 {
 name:"Wellness",
-
 sub:[
 "Vitamins",
 "Protein Supplements",
@@ -482,9 +424,7 @@ sub:[
 "Yoga Accessories",
 "Fitness Trackers"
 ]
-
 }
-
 ]
 }
 

@@ -62,7 +62,6 @@ try {
 
     await login(email, password);
 
-    // 🔥 IMPORTANT — SAVE USER
     localStorage.setItem(
       "user",
       JSON.stringify({
@@ -91,203 +90,201 @@ return (
 
 <div
   onClick={handleOutsideClick}
-  className="min-h-[90vh] flex items-center justify-center px-4 py-12 
-  bg-black/40 backdrop-blur-sm"
+  className="min-h-[90vh] flex items-center justify-center px-4 py-12 bg-black/40 backdrop-blur-sm"
 >
 
-  <motion.div
-    ref={boxRef}
-    onClick={(e) => e.stopPropagation()}
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="max-w-md w-full space-y-6 p-8 rounded-2xl border shadow-2xl 
-    bg-white dark:bg-[#1e1e1e]"
-  >
+<motion.div
+ref={boxRef}
+onClick={(e) => e.stopPropagation()}
+initial={{ opacity: 0, y: 30 }}
+animate={{ opacity: 1, y: 0 }}
+className="max-w-md w-full space-y-6 p-8 rounded-2xl border border-[#ead7cf] shadow-xl bg-[#fff7f4]"
+>
 
-    <div className="text-center space-y-2">
+<div className="text-center space-y-2">
 
-      <h2 className="text-3xl font-bold">
-        {isSignup ? 'Create Account 🚀' : 'Welcome Back 👋'}
-      </h2>
+<h2 className="text-3xl font-bold">
+{isSignup ? 'Create Account 🚀' : 'Welcome Back 👋'}
+</h2>
 
-      <p className="text-sm text-gray-500">
-        {role === 'vendor'
-          ? "Login as Vendor Dashboard"
-          : "Login as Customer"}
-      </p>
+<p className="text-sm text-[#7a6a64]">
+{role === 'vendor'
+? "Login as Vendor Dashboard"
+: "Login as Customer"}
+</p>
 
-    </div>
+</div>
 
-    <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+<div className="flex bg-[#f5e8e4] p-1 rounded-lg">
 
-      <button
-        onClick={() => setRole('customer')}
-        className={`flex-1 py-2 rounded-md text-sm font-medium ${
-          role === 'customer'
-            ? 'bg-white dark:bg-black shadow'
-            : ''
-        }`}
-      >
-        👤 Customer
-      </button>
+<button
+onClick={() => setRole('customer')}
+className={`flex-1 py-2 rounded-md text-sm font-medium ${
+role === 'customer'
+? 'bg-white shadow'
+: ''
+}`}
+>
+👤 Customer
+</button>
 
-      <button
-        onClick={() => setRole('vendor')}
-        className={`flex-1 py-2 rounded-md text-sm font-medium ${
-          role === 'vendor'
-            ? 'bg-white dark:bg-black shadow'
-            : ''
-        }`}
-      >
-        🏪 Vendor
-      </button>
+<button
+onClick={() => setRole('vendor')}
+className={`flex-1 py-2 rounded-md text-sm font-medium ${
+role === 'vendor'
+? 'bg-white shadow'
+: ''
+}`}
+>
+🏪 Vendor
+</button>
 
-    </div>
+</div>
 
-    {error && (
-      <div className="text-red-500 text-sm text-center">
-        {error}
-      </div>
-    )}
+{error && (
+<div className="text-red-500 text-sm text-center">
+{error}
+</div>
+)}
 
-    <form className="space-y-4" onSubmit={handleSubmit}>
+<form className="space-y-4" onSubmit={handleSubmit}>
 
-      {isSignup && (
+{isSignup && (
 
-        <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+<div className="flex items-center gap-2 border border-[#ead7cf] rounded-lg px-3 py-2">
 
-          <User size={16} />
+<User size={16} />
 
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Full Name"
-            className="w-full outline-none bg-transparent"
-          />
+<input
+value={name}
+onChange={(e) => setName(e.target.value)}
+placeholder="Full Name"
+className="w-full outline-none bg-transparent"
+/>
 
-        </div>
+</div>
 
-      )}
+)}
 
-      <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+<div className="flex items-center gap-2 border border-[#ead7cf] rounded-lg px-3 py-2">
 
-        <Mail size={16} />
+<Mail size={16} />
 
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="w-full outline-none bg-transparent"
-        />
+<input
+value={email}
+onChange={(e) => setEmail(e.target.value)}
+placeholder="Email"
+className="w-full outline-none bg-transparent"
+/>
 
-      </div>
+</div>
 
-      {isSignup && (
+{isSignup && (
 
-        <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+<div className="flex items-center gap-2 border border-[#ead7cf] rounded-lg px-3 py-2">
 
-          <Phone size={16} />
+<Phone size={16} />
 
-          <input
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="Phone"
-            className="w-full outline-none bg-transparent"
-          />
+<input
+value={phone}
+onChange={(e) => setPhone(e.target.value)}
+placeholder="Phone"
+className="w-full outline-none bg-transparent"
+/>
 
-        </div>
+</div>
 
-      )}
+)}
 
-      {isSignup && role === 'vendor' && (
+{isSignup && role === 'vendor' && (
 
-        <>
+<>
 
-          <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+<div className="flex items-center gap-2 border border-[#ead7cf] rounded-lg px-3 py-2">
 
-            <Store size={16} />
+<Store size={16} />
 
-            <input
-              value={shopName}
-              onChange={(e) => setShopName(e.target.value)}
-              placeholder="Shop Name"
-              className="w-full outline-none bg-transparent"
-            />
+<input
+value={shopName}
+onChange={(e) => setShopName(e.target.value)}
+placeholder="Shop Name"
+className="w-full outline-none bg-transparent"
+/>
 
-          </div>
+</div>
 
-          <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+<div className="flex items-center gap-2 border border-[#ead7cf] rounded-lg px-3 py-2">
 
-            <MapPin size={16} />
+<MapPin size={16} />
 
-            <input
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Shop Address"
-              className="w-full outline-none bg-transparent"
-            />
+<input
+value={address}
+onChange={(e) => setAddress(e.target.value)}
+placeholder="Shop Address"
+className="w-full outline-none bg-transparent"
+/>
 
-          </div>
+</div>
 
-        </>
+</>
 
-      )}
+)}
 
-      <div className="flex items-center gap-2 border rounded-lg px-3 py-2">
+<div className="flex items-center gap-2 border border-[#ead7cf] rounded-lg px-3 py-2">
 
-        <Lock size={16} />
+<Lock size={16} />
 
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="w-full outline-none bg-transparent"
-        />
+<input
+type="password"
+value={password}
+onChange={(e) => setPassword(e.target.value)}
+placeholder="Password"
+className="w-full outline-none bg-transparent"
+/>
 
-      </div>
+</div>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold"
-      >
+<button
+type="submit"
+disabled={isLoading}
+className="w-full bg-[#d98b8b] text-white py-3 rounded-lg font-semibold"
+>
 
-        {isLoading
-          ? "Processing..."
-          : isSignup
-          ? "Create Account"
-          : "Login"}
+{isLoading
+? "Processing..."
+: isSignup
+? "Create Account"
+: "Login"}
 
-      </button>
+</button>
 
-    </form>
+</form>
 
-    <p className="text-center text-sm text-gray-500">
+<p className="text-center text-sm text-[#7a6a64]">
 
-      {isSignup ? (
+{isSignup ? (
 
-        <>
-          Already have an account?{" "}
-          <Link to="/login" className="text-green-600 font-medium">
-            Login
-          </Link>
-        </>
+<>
+Already have an account?{" "}
+<Link to="/login" className="text-[#c97979] font-medium">
+Login
+</Link>
+</>
 
-      ) : (
+) : (
 
-        <>
-          Don’t have an account?{" "}
-          <Link to="/signup" className="text-green-600 font-medium">
-            Signup
-          </Link>
-        </>
+<>
+Don’t have an account?{" "}
+<Link to="/signup" className="text-[#c97979] font-medium">
+Signup
+</Link>
+</>
 
-      )}
+)}
 
-    </p>
+</p>
 
-  </motion.div>
+</motion.div>
 
 </div>
 

@@ -13,17 +13,17 @@ const login = async (email, password) => {
 const users = JSON.parse(localStorage.getItem("users")) || [];
 
 const found = users.find(
-  u => u.email === email && u.password === password
+u => u.email === email && u.password === password
 );
 
 if (!found) {
-  alert("Wrong email or password ❌");
-  throw new Error("login failed");
+alert("Wrong email or password ❌");
+throw new Error("login failed");
 }
 
 if (found.role === "vendor" && !found.approved) {
-  alert("Vendor account waiting for admin approval");
-  return;
+alert("Vendor account waiting for admin approval");
+return;
 }
 
 localStorage.setItem("user", JSON.stringify(found));
@@ -36,8 +36,8 @@ const signup = async (data) => {
 const users = JSON.parse(localStorage.getItem("users")) || [];
 
 const newUser = {
-  ...data,
-  approved: data.role === "vendor" ? false : true
+...data,
+approved: data.role === "vendor" ? false : true
 };
 
 users.push(newUser);

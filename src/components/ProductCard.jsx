@@ -32,7 +32,7 @@ addToCart(product);
 
 return(
 
-<div className="bg-white rounded-xl shadow hover:shadow-xl transition overflow-hidden group">
+<div className="bg-[#fff7f4] border border-[#ead7cf] rounded-xl shadow-sm hover:shadow-md transition overflow-hidden group">
 
 <Link to={`/product/${product.id}`}>
 
@@ -45,8 +45,9 @@ className="w-full h-full object-cover group-hover:scale-105 transition"
 
 <button
 onClick={toggleWishlist}
-className={`absolute top-2 right-2 p-2 rounded-full
-${liked ? "bg-red-500 text-white":"bg-white"}`}
+className={`absolute top-2 right-2 p-2 rounded-full ${
+liked ? "bg-red-500 text-white":"bg-white"
+}`}
 >
 <Heart size={16}/>
 </button>
@@ -73,7 +74,7 @@ ${liked ? "bg-red-500 text-white":"bg-white"}`}
 
 <button
 onClick={handleCart}
-className="p-2 bg-gray-100 rounded hover:bg-green-600 hover:text-white"
+className="p-2 bg-[#f3e3dc] rounded hover:bg-[#d98b8b] hover:text-white transition"
 >
 <ShoppingCart size={16}/>
 </button>
