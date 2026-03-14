@@ -1,129 +1,182 @@
-BizMart - Multi Vendor E-Commerce Platform
-
-📌 Project Description
-
-BizMart is a modern multi-vendor e-commerce platform designed to empower small businesses by providing them with a digital marketplace. Users can browse products, add items to cart, manage wishlist, and explore different categories with a clean and interactive UI.
-
-This project is built with a focus on UI/UX, performance, and real-world functionality.
+# 🛒 BizMart – Multi Vendor E-Commerce Platform
 
 ---
 
-✨ Features
-
-- 🔍 Smart Product Search & Filtering
-- 🛍️ Add to Cart Functionality
-- ❤️ Wishlist with Animation
-- 📦 Product Details Page with Reviews
-- 🧾 Category-based Product Listing
-- 🌙 Dark Mode Support
-- 🔐 Authentication (Login / Signup)
-- 🧑‍💼 Vendor & Customer Role System
-- 📱 Fully Responsive UI
+# 📌 Project Title
+BizMart – Multi Vendor E-Commerce Platform
 
 ---
 
-🛠️ Tech Stack Used
+# 📖 Project Description
 
-Frontend:
+BizMart is a modern multi-vendor e-commerce platform designed to help small businesses sell their products online through a centralized digital marketplace.
 
+The platform allows customers to explore products across multiple categories, add items to cart, manage wishlist, and complete purchases through a seamless checkout experience.
+
+BizMart also provides vendor functionality, allowing sellers to manage their products and storefront. The platform focuses on providing a clean UI/UX experience, smooth performance, and real-world e-commerce features.
+
+---
+
+# ✨ Features
+
+### 🛍️ Shopping Features
+- Product Browsing by Categories
+- Subcategory Navigation
+- Product Details Page
+- Product Ratings and Reviews
+- Add to Cart Functionality
+- Wishlist Management
+- Product Comparison
+
+### 🔎 Search & Discovery
+- Smart Product Search
+- Category Based Filtering
+- Organized Product Listings
+
+### 👤 User Features
+- User Authentication (Login / Signup)
+- User Profile Page
+- Order History
+- Wishlist Management
+
+### 🧑‍💼 Vendor Features
+- Vendor Dashboard
+- Add New Products
+- Manage Products
+- Vendor Storefront
+
+### 💳 Checkout System
+- Shopping Cart Management
+- Checkout Page
+- Payment Gateway Integration (Cashfree)
+
+### 🤖 AI Assistant
+- AI Chatbot Support
+- Voice Input Support
+- Smart Product Suggestions
+
+### 🎨 UI / UX
+- Fully Responsive Design
+- Smooth Page Animations
+- Modern E-commerce Interface
+- Mobile Friendly Layout
+
+---
+
+# 🛠️ Tech Stack Used
+
+## Frontend
 - React.js
 - Tailwind CSS
 - React Router
 - Framer Motion
 
-Backend:
-
+## Backend
 - Node.js
 - Express.js
 
-Database:
-
+## Database
 - Supabase (PostgreSQL)
 
+## Payment Integration
+- Cashfree Payment Gateway
+
+## AI Integration
+- Google Gemini API
+
 ---
 
-⚙️ Installation Steps
+# ⚙️ Installation Steps
 
-1. Clone Repository
-
-git clone https://github.com/your-username/bizmart-frontend.git
+### 1️⃣ Clone the Repository
+git clone https://github.com/Roshani2505/bizmart-frontend.git
 cd bizmart-frontend
+Copy code
 
-2. Install Dependencies
-
+### 2️⃣ Install Dependencies
 npm install
+Copy code
 
-3. Run Project
-
+### 3️⃣ Start Development Server
 npm run dev
+Copy code
 
 ---
 
-🌐 Deployment Link
+# 🌐 Deployment Link
 
-👉 Frontend Live:
-https://your-vercel-link.vercel.app
+### Frontend Live
 
-👉 Backend API:
-https://your-backend-link.onrender.com
+https://bizmart-ecommerce.netlify.app/
 
----
+### Backend API
 
-🔗 Backend API Link
-
-https://your-backend-link.onrender.com/api
+https://bizmart-backend-evp2.onrender.com
 
 ---
 
-🔐 Login Credentials (For Testing)
-
-Customer:
-
-- Email: test@user.com
-- Password: 123456
-
-Vendor:
-
-- Email: vendor@test.com
-- Password: 123456
+# 🔗 Backend API Link
+https://bizmart-backend-evp2.onrender.com/api⁠�
+Copy code
 
 ---
 
-📸 Screenshots
+# 🔐 Login Credentials (For Testing)
 
-🏠 Homepage
+### Customer Account
 
-(Add Screenshot)
+Email: test@user.com  
+Password: 123456  
 
-📦 Product Page
+### Vendor Account
 
-(Add Screenshot)
-
-❤️ Wishlist
-
-(Add Screenshot)
-
-🛒 Cart
-
-(Add Screenshot)
+Email: vendor@test.com  
+Password: 123456  
 
 ---
 
-🎥 Video Walkthrough
+# 📸 Screenshots
 
-👉 https://your-video-link.com
+### 🏠 Login Page
+![Login/Signup](image-5.png)
+
+### 🏠 Homepage
+![HomePage](image.png)
+
+### 🛍️ Product Listing Page
+![Products](image-1.png)
+
+### 📦 Product Details Page
+![Product Card](image-2.png)
+
+### ❤️ Wishlist
+![Wishlist](image-3.png)
+
+### 🛒 Cart Page
+![Cart](image-4.png)
+
+### 🤖 AI Chatbot
+![alt text](image-6.png)
 
 ---
 
-🚀 Future Improvements
+# 🎥 Video Walkthrough
 
-- Payment Gateway Integration
-- Order Tracking System
-- Real-time Notifications
-- SaaS-level Vendor Dashboard
+👉 https://drive.google.com/file/d/186wmz_aey04_wjpuawMDRmEAO8aBBnw8/view?usp=sharing
 
 ---
 
-👨‍💻 Developed By
+# 🚀 Future Improvements
+
+- Real-time Order Tracking
+- Advanced Vendor Analytics
+- Inventory Management
+- Push Notifications
+- AI Product Recommendation System
+- SaaS Level Vendor Dashboard
+
+---
+
+# 👨‍💻 Developed By
 
 Roshani
